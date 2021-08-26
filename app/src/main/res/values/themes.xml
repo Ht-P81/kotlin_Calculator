@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- Aqui al final del theme Material NoActionBar quita la barra superior por defecto de la aplicación. -->
+    <style name="Theme.KotlinCalculator" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. cambia la Barra de color del fondo al ejecutar la aplicación -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/cyan_900</item>
+        <!-- Customize your theme here. -->
+
+        <!-- Esto lo hacemos nosotros. -->
+        <item name="android:colorBackground">@color/cyan_900</item>
+        <item name="colorSurface">@color/cyan_800</item>
+
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+
+        <!-- Aplicamos lo creado en el documento shape. -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
+    </style>
+
+
+</resources>

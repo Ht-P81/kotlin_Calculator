@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">kotlinCalculator</string>
+    <string name="calc_btn_point">.</string>
+    <string name="calc_btn_zero">0</string>
+    <string name="calc_btn_resolve">=</string>
+    <string name="calc_btn_one">1</string>
+    <string name="calc_btn_two">2</string>
+    <string name="calc_btn_three">3</string>
+    <string name="calc_btn_four">4</string>
+    <string name="calc_btn_mas">+</string>
+    <string name="calc_btn_five">5</string>
+    <string name="calc_btn_six">6</string>
+    <string name="calc_btn_resta">-</string>
+    <string name="calc_btn_seven">7</string>
+    <string name="calc_btn_eight">8</string>
+    <string name="calc_btn_nine">9</string>
+    <string name="calc_btn_multiplicar">x</string>
+    <string name="calc_btn_clear">C</string>
+    <string name="calc_btn_delete">CE</string>
+    <string name="calc_btn_div">÷</string>
+    <string name="message_exp_incorrect">La expresión es incorrecta.</string>
+</resources>
