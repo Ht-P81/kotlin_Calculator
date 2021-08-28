@@ -21,15 +21,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvOperation.addTextChangedListener { charSequence ->
-            if(canReplaceOperator(charSequence.toString())){
-               /* Snackbar.make(binding.root, "REEMPLAZABLE",
-                    //el metodo setAnchorView es para poner el mensaje en el sitio que quieras
-                    Snackbar.LENGTH_SHORT).setAnchorView(binding.linearlayoutTop).show()*/
-                val length = binding.tvOperation.text.length
-                val newOperation = binding.tvOperation.text.toString().substring(0, length-2) +
-                        binding.tvOperation.text.toString().substring(length-1)
-                binding.tvOperation.text = newOperation
+
+        binding.tvOperation.run {
+            addTextChangedListener { charSequence ->
+                if(canReplaceOperator(charSequence.toString())){
+                    /* Snackbar.make(binding.root, "REEMPLAZABLE",
+                         //el metodo setAnchorView es para poner el mensaje en el sitio que quieras
+                         Snackbar.LENGTH_SHORT).setAnchorView(binding.linearlayoutTop).show()*/
+
+                    val newStr = "$text".substring(0, text.length-2) +
+                            text.substring(text.length-1)
+                    text = newStr
+                }
             }
         }
     } // llave de cierre del metodoOncreate
@@ -39,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         val lastElement = charSequence[charSequence.length-1].toString()
         val penultimaElement = charSequence[charSequence.length-2].toString()
-        return (lastElement == OPERATOR_MULTI || lastElement == OPERATOR_SUMA || lastElement == OPERATOR_DIV)
-                && (penultimaElement== OPERATOR_MULTI || penultimaElement == OPERATOR_SUMA ||
-                penultimaElement == OPERATOR_DIV || penultimaElement == OPERATOR_RESTA)
+        return (lastElement == Contantes.OPERATOR_MULTI || lastElement == Contantes.OPERATOR_SUMA || lastElement == Contantes.OPERATOR_DIV)
+                && (penultimaElement== Contantes.OPERATOR_MULTI || penultimaElement == Contantes.OPERATOR_SUMA ||
+                penultimaElement == Contantes.OPERATOR_DIV || penultimaElement == Contantes.OPERATOR_RESTA)
     }
 
     // Metodo publico y basico para poder llamarlo desde la vista, por eso el parametro de view
@@ -51,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         // Esta variable albergará el valor correspondiente a cada tecla
         val valueStr = (view as Button).text.toString()
+        //Vamos a reducir código del OnclickButton
+
 
         // Cuando en la vista se pulse el botón, aparacerá su id (texto de la tecla)
         when(view.id){
@@ -104,14 +109,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun addPoint(pointStr: String, operation: String) {
         // Si no contiene ese punto entonces agregalo
-        if(!operation.contains(POINT)){
+        if(!operation.contains(Contantes.POINT)){
             binding.tvOperation.append(pointStr)
         } else{
             val operator = getOperator(operation)
             var values = arrayOfNulls<String>(0)
-            if(operator != OPERATOR_NULL) {
-                if (operator == OPERATOR_RESTA) {
-                    val index = operation.lastIndexOf(OPERATOR_RESTA)
+            if(operator != Contantes.OPERATOR_NULL) {
+                if (operator == Contantes.OPERATOR_RESTA) {
+                    val index = operation.lastIndexOf(Contantes.OPERATOR_RESTA)
                     // Si el indice tiene dos operadores puede dividirse sino la operación estaría incompleta
                     if (index < operation.length - 1) {
                         values = arrayOfNulls(2)
@@ -133,12 +138,12 @@ class MainActivity : AppCompatActivity() {
                 if(values.size > 1){
                     val numberTwo = values[1]!!
                     // Si la primera parte de la operacion contiene punto, la segunda parte puede llevar punto
-                    if(numberOne.contains(POINT) && !numberTwo.contains(POINT)){
+                    if(numberOne.contains(Contantes.POINT) && !numberTwo.contains(Contantes.POINT)){
                         binding.tvOperation.append(pointStr)
                     }
 
                 } else {
-                    if(numberOne.contains(POINT)){
+                    if(numberOne.contains(Contantes.POINT)){
                         binding.tvOperation.append(pointStr)
                     }
                 }
@@ -156,16 +161,16 @@ class MainActivity : AppCompatActivity() {
             else operation.substring(operation.length-1)
 
             // Si el signo-operador es el de resta
-            if(operator == OPERATOR_RESTA){
+            if(operator == Contantes.OPERATOR_RESTA){
                 // Validamos el signo resta si está vacío (puede ser numero negativo),
                     // o es último elemento del primer operando (lo normal para operar, 5-3)
                         //o es diferente de punto, es decir, si es punto no agrega el signo
-                if(operation.isEmpty() || lastElement != OPERATOR_RESTA && lastElement !=POINT){
+                if(operation.isEmpty() || lastElement != Contantes.OPERATOR_RESTA && lastElement !=Contantes.POINT){
                     binding.tvOperation.append(operator) //Evitamos un doble signo negativo
                 }
             }else{
                 // Con esto NO permitimos que se agrege un signo si la PartOne termina en punto
-                if(!operation.isEmpty() && lastElement != POINT) {
+                if(!operation.isEmpty() && lastElement != Contantes.POINT) {
                     binding.tvOperation.append(operator) //x5 este caso es invalido
                 }
             }
@@ -178,16 +183,16 @@ class MainActivity : AppCompatActivity() {
         var operation = operationRef
 
         //Si tenemos un punto que esta al final de la pantalla, lo quitamos
-        if(operation.contains(POINT) && operation.lastIndexOf(POINT) == operation.length-1){
+        if(operation.contains(Contantes.POINT) && operation.lastIndexOf(Contantes.POINT) == operation.length-1){
             operation = operation.substring(0, operation.length-1)
         }
 
         val operator = getOperator(operation)
 
         var values = arrayOfNulls<String>(0)
-        if(operator != OPERATOR_NULL){
-            if(operator == OPERATOR_RESTA){
-                val index = operation.lastIndexOf(OPERATOR_RESTA)
+        if(operator != Contantes.OPERATOR_NULL){
+            if(operator == Contantes.OPERATOR_RESTA){
+                val index = operation.lastIndexOf(Contantes.OPERATOR_RESTA)
                     // Si el indice tiene dos operadores puede dividirse sino la operación estaría incompleta
                     if(index < operation.length-1){
                         values = arrayOfNulls(2)
@@ -228,7 +233,7 @@ class MainActivity : AppCompatActivity() {
           }
 
         }else{
-            if( isFromResolve && operator != OPERATOR_NULL) showMessage()
+            if( isFromResolve && operator != Contantes.OPERATOR_NULL) showMessage()
         }
     }
 
@@ -236,21 +241,21 @@ class MainActivity : AppCompatActivity() {
         var operator = ""
 
         // Seleccionar y saber que tipo de operador ha seleccionado
-        if (operation.contains(OPERATOR_MULTI)){
-            operator = OPERATOR_MULTI
-        } else if (operation.contains(OPERATOR_DIV)){
-            operator = OPERATOR_DIV
-        } else if (operation.contains(OPERATOR_SUMA)){
-            operator = OPERATOR_SUMA
+        if (operation.contains(Contantes.OPERATOR_MULTI)){
+            operator = Contantes.OPERATOR_MULTI
+        } else if (operation.contains(Contantes.OPERATOR_DIV)){
+            operator = Contantes.OPERATOR_DIV
+        } else if (operation.contains(Contantes.OPERATOR_SUMA)){
+            operator = Contantes.OPERATOR_SUMA
         } else {       // este ultimo caso o es un operador vacío o es una resta
-            operator = OPERATOR_NULL
+            operator = Contantes.OPERATOR_NULL
         }
 
         // Validación de si tiene una operador de resta o uno vacío
         // el lastIndexOf se queda con el último operador que aparezca para asi permitir los negativos en la primer parte de la operacion
         // indice indexof = 0 hay un operador, pero si es mayor a 0, hay mas de un simbolo, por tanto, se ha metido negativos
-        if(operator == OPERATOR_NULL && operation.lastIndexOf(OPERATOR_RESTA)>0){
-            operator = OPERATOR_RESTA
+        if(operator == Contantes.OPERATOR_NULL && operation.lastIndexOf(Contantes.OPERATOR_RESTA)>0){
+            operator = Contantes.OPERATOR_RESTA
         }
         return operator
     }
@@ -259,10 +264,10 @@ class MainActivity : AppCompatActivity() {
         var result = 0.0
 
         when(operator){
-            OPERATOR_MULTI -> result = PartOne * PartTwo
-            OPERATOR_DIV -> result = PartOne / PartTwo
-            OPERATOR_RESTA -> result = PartOne - PartTwo
-            OPERATOR_SUMA -> result = PartOne + PartTwo
+            Contantes.OPERATOR_MULTI -> result = PartOne * PartTwo
+            Contantes.OPERATOR_DIV -> result = PartOne / PartTwo
+            Contantes.OPERATOR_RESTA -> result = PartOne - PartTwo
+            Contantes.OPERATOR_SUMA -> result = PartOne + PartTwo
         }
         return result
     }
@@ -271,14 +276,5 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(binding.root, getString(R.string.message_exp_incorrect),
             //el metodo setAnchorView es para poner el mensaje en el sitio que quieras
             Snackbar.LENGTH_SHORT).setAnchorView(binding.linearlayoutTop).show()
-    }
-
-    companion object{
-        const val OPERATOR_MULTI = "x"
-        const val OPERATOR_DIV = "÷"
-        const val OPERATOR_RESTA= "-"
-        const val OPERATOR_SUMA = "+"
-        const val OPERATOR_NULL= "null"
-        const val POINT= "."
     }
 }

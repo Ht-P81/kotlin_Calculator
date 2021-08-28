@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Aquí va copiando las caracteristicas comunes que tenga el textView, los layouts, los botones, crea un estilo y luego pone ese estilo en su apartado del xml-->
     <style name = "MyTextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:padding">@dimen/common_padding_min</item>
         <item name="android:textColor">?colorOnSurface</item>
-        <item name="background">?colorOnSurface</item>
+        <item name="android:background">?colorOnSurface</item>
         <item name= "layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
-
-
     </style>
 </resources>
